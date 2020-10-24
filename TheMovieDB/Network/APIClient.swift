@@ -35,13 +35,18 @@ class APIClient {
             completion(movies)
         }
     }
-    static func getPoster(forMovie movie: MoviesController.Movie, withSize size: String, completion: @escaping (UIImage) -> Void) {
-        guard let url = try? "\(Constants.basePhotoURLString)\(size)\(movie.posterPath)".asURL() else { return }
-        KingfisherManager.shared.retrieveImage(with: url) { (result) in
-            switch result {
-            case let .success(imageResult): completion(imageResult.image)
-            case .failure(_): print("Error getting image by KingFisher")
-            }
+    static func getGenres(completion: @escaping ([MoviesController.MovieGenre]) -> Void) {
+        AF.request(APIRouter.moviesGenres).validate().responseDecodable(of: MoviesController.MoviesGenres.self) { (response) in
+            guard let result = response.value else { return }
+            completion(result.genres)
+        }
+    }
+    static func getRelatedMovies(of movie: MoviesController.Movie, completion: @escaping (MoviesController.Movies) -> Void) {
+        let url = "\(Constants.baseURL)/movie/\(movie.id)/similar?api_key=\(Constants.apiKey)"
+        guard let path = URL(string: url) else { return }
+        AF.request(path).validate().responseDecodable(of: MoviesController.Movies.self) { (response) in
+            guard let result = response.value else { return }
+            completion(result)
         }
     }
 }

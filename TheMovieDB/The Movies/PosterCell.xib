@@ -16,20 +16,32 @@
                 <rect key="frame" x="0.0" y="0.0" width="176" height="225"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kVd-xI-2Yo">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dyr-uk-7h6">
                         <rect key="frame" x="0.0" y="0.0" width="176" height="225"/>
-                    </imageView>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kVd-xI-2Yo">
+                                <rect key="frame" x="0.0" y="0.0" width="176" height="225"/>
+                            </imageView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="kVd-xI-2Yo" firstAttribute="leading" secondItem="Dyr-uk-7h6" secondAttribute="leading" id="DX2-VV-udN"/>
+                            <constraint firstAttribute="trailing" secondItem="kVd-xI-2Yo" secondAttribute="trailing" id="Pag-gv-e2I"/>
+                            <constraint firstItem="kVd-xI-2Yo" firstAttribute="top" secondItem="Dyr-uk-7h6" secondAttribute="top" id="Vmq-xH-j5m"/>
+                            <constraint firstAttribute="bottom" secondItem="kVd-xI-2Yo" secondAttribute="bottom" id="bQg-YG-7gd"/>
+                        </constraints>
+                    </view>
                 </subviews>
             </view>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="kVd-xI-2Yo" secondAttribute="trailing" id="05o-Y8-K5f"/>
-                <constraint firstAttribute="bottom" secondItem="kVd-xI-2Yo" secondAttribute="bottom" id="7BV-en-XQH"/>
-                <constraint firstItem="kVd-xI-2Yo" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="fIG-vx-TsW"/>
-                <constraint firstItem="kVd-xI-2Yo" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="lJf-eq-Jyj"/>
+                <constraint firstAttribute="trailing" secondItem="Dyr-uk-7h6" secondAttribute="trailing" id="4Nk-Cl-vKY"/>
+                <constraint firstItem="Dyr-uk-7h6" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="80m-gs-VCA"/>
+                <constraint firstAttribute="bottom" secondItem="Dyr-uk-7h6" secondAttribute="bottom" id="RHT-ky-fEu"/>
+                <constraint firstItem="Dyr-uk-7h6" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="o2V-Yh-xih"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="176" height="225"/>
             <connections>
+                <outlet property="containerView" destination="Dyr-uk-7h6" id="Nyb-pw-Pjr"/>
                 <outlet property="posterImageView" destination="kVd-xI-2Yo" id="Trq-Xs-1HS"/>
             </connections>
             <point key="canvasLocation" x="-103" y="4"/>

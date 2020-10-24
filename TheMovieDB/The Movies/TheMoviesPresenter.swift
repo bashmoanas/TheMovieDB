@@ -9,7 +9,7 @@
 import Foundation
 
 protocol TheMoviesView:class {
-    func updateUI(withMovie movie: MoviesController.MovieCategory)
+    func updateUI(withMovies movies: MoviesController.MovieCategory)
 }
 
 class TheMoviesPresenter {
@@ -25,28 +25,28 @@ class TheMoviesPresenter {
     func fetchTopRatedMovies() {
         APIClient.getTopRatedMovies { (movies) in
             let newCategory = MoviesController.MovieCategory(name: "Top Rated Movies", movies: movies.results)
-            self.view?.updateUI(withMovie: newCategory)
+            self.view?.updateUI(withMovies: newCategory)
             self.fetchPopularMovies()
         }
     }
     private func fetchPopularMovies() {
         APIClient.getPopularMovies { (movies) in
             let newCategory = MoviesController.MovieCategory(name: "Popular Movies", movies: movies.results)
-            self.view?.updateUI(withMovie: newCategory)
+            self.view?.updateUI(withMovies: newCategory)
             self.fetchComingSoonMovies()
         }
     }
-    private func fetchComingSoonMovies() {
+    func fetchComingSoonMovies() {
         APIClient.getComingSoonMovies { (movies) in
             let newCategory = MoviesController.MovieCategory(name: "Coming Soon Movies", movies: movies.results)
-            self.view?.updateUI(withMovie: newCategory)
+            self.view?.updateUI(withMovies: newCategory)
             self.fetchNowPlayingMovies()
         }
     }
     private func fetchNowPlayingMovies() {
-        APIClient.getTopRatedMovies { (movies) in
+        APIClient.getNowPlayingMovies { (movies) in
             let newCategory = MoviesController.MovieCategory(name: "Now Playing Movies", movies: movies.results)
-            self.view?.updateUI(withMovie: newCategory)
+            self.view?.updateUI(withMovies: newCategory)
         }
     }
 }

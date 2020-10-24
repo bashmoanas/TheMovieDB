@@ -14,6 +14,7 @@ enum APIRouter: URLRequestConvertible {
     case popularMovies
     case comingSoon
     case nowPlaying
+    case moviesGenres
     
     private var parameters: Parameters {
         switch self {
@@ -26,6 +27,7 @@ enum APIRouter: URLRequestConvertible {
         case .popularMovies: return "/movie/popular"
         case .comingSoon: return "/movie/upcoming"
         case .nowPlaying: return "/movie/now_playing"
+        case .moviesGenres: return "/genre/movie/list"
         }
     }
     

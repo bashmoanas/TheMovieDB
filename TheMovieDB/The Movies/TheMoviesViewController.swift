@@ -13,7 +13,7 @@ class TheMoviesViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var theMoviesPresenter: TheMoviesPresenter?
-    static var moviesToDisplay = [MoviesController.MovieCategory]()
+    var moviesToDisplay = [MoviesController.MovieCategory]()
     
     // MARK: - View Life Cycle
     override func viewDidLoad() {
@@ -45,16 +45,19 @@ extension TheMoviesViewController {
 // MARK: - tableView Data Source Methods
 extension TheMoviesViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return TheMoviesViewController.moviesToDisplay.count
+        return moviesToDisplay.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: AllPostersCell.reuseIdentifier, for: indexPath) as? AllPostersCell else { fatalError() }
-        cell.didTapPoster = { (movie) in
+        cell.configure(withMovies: moviesToDisplay[indexPath.section].movies, atSection: indexPath.section)
+        
+//        TheMoviesViewController.sectionInCollectionView = indexPath.section
+        cell.didTapPoster = { (section, item) in
             let movieDetailsViewController = MovieDetailsViewController.instantiateViewController(fromStoryboard: .main)
-            movieDetailsViewController.movie = movie
+            movieDetailsViewController.movie = self.moviesToDisplay[section].movies[item]
             self.navigationController?.pushViewController(movieDetailsViewController, animated: true)
         }
         return cell
@@ -67,21 +70,22 @@ extension TheMoviesViewController: UITableViewDelegate {
         guard let categoryHeader = tableView.dequeueReusableHeaderFooterView(withIdentifier: CategoryHeader.reuseIdentifier) as? CategoryHeader else { fatalError() }
         categoryHeader.currentSection = section
         categoryHeader.didTapSection = { (currentSection) in
-            TheMoviesViewController.moviesToDisplay[section].isExpanded.toggle()
+            self.moviesToDisplay[section].isExpanded.toggle()
             tableView.reloadData()
         }
-         categoryHeader.configure(withMovieCategory: TheMoviesViewController.moviesToDisplay[section])
+         categoryHeader.configure(withMovieCategory: moviesToDisplay[section])
         return categoryHeader
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return TheMoviesViewController.moviesToDisplay[indexPath.section].isExpanded ? 200 : 0
+        return moviesToDisplay[indexPath.section].isExpanded ? 200 : 0
     }
+    
 }
 
 // MARK: - TheMovieView Delegate Methods
 extension TheMoviesViewController: TheMoviesView {
-    func updateUI(withMovie movie: MoviesController.MovieCategory) {
-        TheMoviesViewController.moviesToDisplay.append(movie)
+    func updateUI(withMovies movies: MoviesController.MovieCategory) {
+        moviesToDisplay.append(movies)
         tableView.reloadData()
     }
 }
